@@ -31,7 +31,7 @@ namespace SteerStone.Encryption
         /// <param name="p_Value"></param>
         /// <param name="p_Length"></param>
         /// <returns></returns>
-        protected string EncodeIntergerBase64(int p_Value, int p_Length)
+        public string EncodeIntergerBase64(int p_Value, int p_Length)
         {
             string l_Stack = "";
             for (int l_X = 1; l_X <= p_Length; l_X++)
@@ -48,7 +48,7 @@ namespace SteerStone.Encryption
         /// </summary>
         /// <param name="p_Data"></param>
         /// <returns></returns>
-        protected string EncodeStringBase64(string p_Data)
+        public string EncodeStringBase64(string p_Data)
         {
             int p_Value = p_Data.Length;
             int p_Length = 2;
@@ -67,7 +67,7 @@ namespace SteerStone.Encryption
         /// </summary>
         /// <param name="p_Data"></param>
         /// <returns></returns>
-        protected int DecodeBase64(string p_Data)
+        public int DecodeBase64(string p_Data)
         {
             char[] l_Val = p_Data.ToCharArray();
             int l_Data = 0;

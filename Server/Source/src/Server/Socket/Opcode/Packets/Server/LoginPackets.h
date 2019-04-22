@@ -22,5 +22,21 @@
 
 namespace SteerStone
 {
-   
+    namespace Packet
+    { 
+        namespace Login
+        {
+            /// SMSG_HELLO packet builder
+            class VersionCheck final : public ServerPacket
+            {
+            public:
+                /// Constructor 
+                VersionCheck() : ServerPacket(SMSG_VERSION_CHECK) {}
+
+            public:
+                /// Write the packet
+                StringBuffer const* Write();
+            };
+        } ///< NAMESPACE LOGIN
+    } ///< NAMESPACE PACKET
 } ///< NAMESPACE STEERSTONE

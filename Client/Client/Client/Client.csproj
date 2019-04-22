@@ -48,10 +48,10 @@
   <ItemGroup>
     <Compile Include="MainEntry.cs" />
     <Compile Include="Common\Common.cs" />
-    <Compile Include="Login.cs">
+    <Compile Include="Forms\Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Login.Designer.cs">
+    <Compile Include="Forms\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -60,9 +60,9 @@
     <Compile Include="Socket\Encryption\Base64.cs" />
     <Compile Include="Socket\Handlers\MessageHandler.cs" />
     <Compile Include="Socket\NETSocket.cs" />
-    <Compile Include="Socket\Handlers\ServerBuffer.cs" />
+    <Compile Include="Socket\ServerBuffer.cs" />
     <Compile Include="Socket\Encryption\RC4.cs" />
-    <EmbeddedResource Include="Login.resx">
+    <EmbeddedResource Include="Forms\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

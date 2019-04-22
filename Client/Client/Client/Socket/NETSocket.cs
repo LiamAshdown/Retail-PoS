@@ -61,9 +61,9 @@ namespace SteerStone.TCP
                 m_Socket = new Socket(l_Ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 m_Socket.BeginConnect(l_RemoteEndPoint, new AsyncCallback(ConnectionCallBack), m_Socket);
 
-                /// Let server know we are ready to accept data!
+                /// Initialize server to client response
                 ServerPacket l_ServerPacket = new ServerPacket();
-                l_ServerPacket.AppendInterger(Common.SERVER_LOGIN);
+                l_ServerPacket.AppendInterger(Common.CLIENT_HELLO);
                 l_ServerPacket.AppendSOH();
                 Send(l_ServerPacket.GetData());
 
@@ -106,11 +106,7 @@ namespace SteerStone.TCP
                 if (l_BytesRecieved > 0)
                 {
                     m_Buffer.BufferString.Append(m_Cryption.DecryptRC4((Encoding.ASCII.GetString(m_Buffer.Buffer, 0, l_BytesRecieved))));
-                    m_Buffer.BufferString.Append((Encoding.ASCII.GetString(m_Buffer.Buffer, 0, l_BytesRecieved)));
 
-                    string test = m_Buffer.BufferString.ToString();
-
-                    /// Pass the data into our Client to handle
                     ProcessIncomingData();
 
                     /// Continue to read data
@@ -121,10 +117,14 @@ namespace SteerStone.TCP
             }
             catch (Exception e)
             {
+                string test = e.ToString();
                 Console.WriteLine(e);
             }
         }
 
+        /// <summary>
+        /// Pass the buffer into our derived class to handle
+        /// </summary>
         public virtual void ProcessIncomingData() { }
 
         /// <summary>
@@ -179,6 +179,10 @@ namespace SteerStone.TCP
             }
         }
 
+        /// <summary>
+        /// Returns our buffer we are currently dealing with
+        /// </summary>
+        /// <returns></returns>
         protected ref BufferData GetBuffer()
         {
             return ref m_Buffer;

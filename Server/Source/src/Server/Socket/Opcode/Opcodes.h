@@ -24,12 +24,13 @@
 
 enum ClientPacketHeader
 {
-
+    CMSG_HELLO                      = 0x0,
+    CMSG_USER_LOGIN                 = 0x1,
 };
 
 enum ServerPacketHeader
 {
-
+    SMSG_VERSION_CHECK              = 0x0,
 };
 
 namespace SteerStone

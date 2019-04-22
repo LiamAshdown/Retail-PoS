@@ -22,9 +22,9 @@ namespace Client
         {
             /// Send our login details to server
             ServerPacket l_ServerPacket = new ServerPacket();
-            l_ServerPacket.AppendInterger(Common.SERVER_LOGIN);
-            l_ServerPacket.AppendString(Login_Box_Username.Text);
-            l_ServerPacket.AppendString(Login_Box_Password.Text);
+            l_ServerPacket.AppendInterger(Common.CLIENT_LOGIN);
+            l_ServerPacket.AppendString(Login_Box_Username.Text, false);
+            l_ServerPacket.AppendString(Login_Box_Password.Text, false);
             MainEntry.GetInstance.SendPacket(l_ServerPacket.GetData());
         }
     }

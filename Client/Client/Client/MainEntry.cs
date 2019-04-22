@@ -16,9 +16,11 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
+using System.Windows.Forms;
 using SteerStone.Handler;
 using SteerStone.TCP;
-using System.Windows.Forms;
+using SteerStone.Encryption;
 
 namespace SteerStone.Entry
 {
@@ -33,30 +35,30 @@ namespace SteerStone.Entry
         static MainEntry() { }
 
         /// <summary>
-        /// Constructor
+        /// Private Constructor
         /// </summary>
-        private MainEntry()
-        {
-        }
+        private MainEntry() { }
 
         /// <summary>
         /// Attempt to connect to database and load up forms etc..
         /// </summary>
         public void BootUp()
         {
+            /// Initialize our server handlers
+            m_MessageHandler.RegisterServerHandlers();
+
             /// Attempt to connect server
             if (!StartClient("127.0.0.1", 37120)) /// Hard coded address
-            {
                 MessageBox.Show("Failed to connect to server, no response from server", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             else
             {
+                /// Boot up our login form for user to login
                 m_Login = new Client.Login();
                 m_Login.ShowDialog();
             }
         }
         /// <summary>
-        /// Return our single class
+        /// Return our singleton class
         /// </summary>
         public static MainEntry GetInstance => m_Instance;
 
@@ -67,10 +69,11 @@ namespace SteerStone.Entry
         public override void ProcessIncomingData()
         {
             /// We can potentially recieve multiple packets in same stream, split them up and process from there
-            string[] l_Buffer = GetBuffer().BufferString.ToString().Split('\x1');
+            string[] l_Buffer = System.Text.Encoding.Default.GetString(GetBuffer().Buffer).Split('\x1');
             foreach (string l_Itr in l_Buffer)
             {
-
+                /// First 2 bytes are fake
+                m_MessageHandler.ExecuteServerMessageHandler((uint)m_Base64.DecodeBase64((l_Itr.Substring(0, 2))));
             }
         }
 
@@ -84,11 +87,22 @@ namespace SteerStone.Entry
         }
 
         /// <summary>
+        /// Returns our login form
+        /// </summary>
+        /// <returns></returns>
+        public ref Client.Login GetLoginForm()
+        {
+            return ref m_Login;
+        }
+
+        /// <summary>
         /// Variables declarations
         /// </summary>
         private static readonly MainEntry m_Instance = new MainEntry();
+        private static MessageHandler m_MessageHandler = new MessageHandler();
+        Base64 m_Base64 = new Base64();
 
         /// Forms
-        Client.Login m_Login;
+        private Client.Login m_Login;
     }
 }

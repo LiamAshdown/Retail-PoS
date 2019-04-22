@@ -28,6 +28,7 @@ namespace SteerStone.Handler
 {
     /// <summary>
     /// Constructs a string buffer to be sent to server
+    /// Uses base64 to encrypt our data
     /// </summary>
     class ServerPacket : Base64
     {

@@ -16,47 +16,53 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using SteerStone.SharedDefines;
+using SteerStone.Entry;
+
 namespace SteerStone.Handler
 {
+    /// <summary>
+    /// Responsible for executing the server opcode handlers
+    /// </summary>
     public sealed class MessageHandler
     {
         /// <summary>
-        /// Static Constructor used for when MessageHandler is called
-        /// </summary>
-        static MessageHandler() { }
-
-        /// <summary>
         ///  Private constructor gets called on first creation of MessageHandler
         /// </summary>
-        private MessageHandler() { }
-
-        /// <summary>
-        /// Return our single class
-        /// </summary>
-        public static MessageHandler Instance => m_Instance;
+        public MessageHandler() { }
 
         /// <summary>
         /// Initialize our client handlers
         /// </summary>
-        public void RegisterClientHandlers()
+        public void RegisterServerHandlers()
         {
-            m_ClientHandler = new ClientHandler[m_MaxMessageId];
-            //m_ClientHandler[0] = new ClientHandler(CLIENT_HELLO);
+            m_ServerHandler = new ServerHandler[Common.MaxHeaderId];
+            m_ServerHandler[Common.SERVER_VERSION_CHECK] = new ServerHandler(HandleVersionCheck);
         }
 
-        public void ExecuteClientMessageHandler(uint p_HeaderId)
+        /// <summary>
+        /// Execute the server opcode handler
+        /// </summary>
+        /// <param name="p_HeaderId"></param>
+        public void ExecuteServerMessageHandler(uint p_HeaderId)
         {
-            if (p_HeaderId <= m_MaxMessageId)
-                if (m_ClientHandler[p_HeaderId] != null)
-                    m_ClientHandler[p_HeaderId].Invoke();
+            if (p_HeaderId <= Common.MaxHeaderId)
+                if (m_ServerHandler[p_HeaderId] != null)
+                    m_ServerHandler[p_HeaderId].Invoke();
+        }
+
+        /// <summary>
+        /// Check if client version matches the expected version from server
+        /// </summary>
+        private void HandleVersionCheck()
+        {
+            /// TODO; Check version logic
         }
 
         /// <summary>
         /// Variables declarations
         /// </summary>
-        private delegate void ClientHandler();
-        private ClientHandler[] m_ClientHandler;
-        private uint m_MaxMessageId = 200; // Max Header Id
-        private static readonly MessageHandler m_Instance = new MessageHandler();
+        private delegate void ServerHandler();
+        private ServerHandler[] m_ServerHandler;
     }
 }

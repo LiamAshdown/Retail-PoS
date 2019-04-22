@@ -22,13 +22,23 @@ namespace SteerStone.SharedDefines
         public const string SecretKey = "XGZH2J4M5N6Q8R9SBUCVDXFYGZJ3K4M6P7Q8SATBUCWEXFYH2J3K5N6P7R";
 
         /// <summary>
+        /// Max Header Id we can accept
+        /// </summary>
+        public const uint MaxHeaderId = 200;
+
+        /// <summary>
         /// Initialize connetion between server and client
         /// </summary>
-        public const int SERVER_HELLO = 0x0;
+        public const int CLIENT_HELLO = 0x0;
 
         /// <summary>
         /// Sends Login details to server
         /// </summary>
-        public const int SERVER_LOGIN = 0x1;
+        public const int CLIENT_LOGIN = 0x1;
+
+        /// <summary>
+        /// Check if client version matches with server expected version
+        /// </summary>
+        public const int SERVER_VERSION_CHECK = 0x0;
     }
 }

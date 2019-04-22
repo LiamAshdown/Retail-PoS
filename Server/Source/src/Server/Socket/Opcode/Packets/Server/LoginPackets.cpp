@@ -20,5 +20,25 @@
 
 namespace SteerStone
 {
-   
+    namespace Packet
+    {
+        namespace Login
+        {
+            //////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////
+
+            StringBuffer const * VersionCheck::Write()
+            {
+                m_Buffer.AppendString("1.0.0.0", false);
+
+                m_Buffer.AppendSOH();
+
+                return &m_Buffer;
+            }
+
+            //////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////
+
+        } ///< NAMESPACE LOGIN
+    } ///< NAMESPACE PACKET
 } ///< NAMESPACE STEERSTONE

@@ -67,13 +67,13 @@ namespace SteerStone
             l_BufferVec.resize(l_BufferVec.size() + 1);
             l_BufferVec[l_BufferVec.size() - 1] = 0;
 
+            /// Potentially we could recieve multiple packets in same stream
             std::vector<std::string> l_Split;
-            boost::split(l_Split, Decrypt((char*)&l_BufferVec[0]), boost::is_any_of(" "));
+            boost::split(l_Split, Decrypt((char*)&l_BufferVec[0]), boost::is_any_of("\x1"));
 
             for (auto const& l_Itr : l_Split)
             {
                 std::unique_ptr<ClientPacket> l_Packet = std::make_unique<ClientPacket>(l_Itr.substr(2)); ///< First 2 bytes is fake
-                std::string test = l_Packet->ReadString();
 
                 LOG_INFO << "[INCOMING]: " << "[" << l_Packet->GetHeader() << "] [" << sOpcode->GetClientPacket(l_Packet->GetHeader()).Name << "]";
 

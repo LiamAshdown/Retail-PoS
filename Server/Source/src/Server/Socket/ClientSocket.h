@@ -53,11 +53,14 @@ namespace SteerStone
 
         /// Client Handlers
         void ExecutePacket(const OpcodeHandler& p_Handler, std::unique_ptr<ClientPacket> p_Packet);
+        void HandleHello(std::unique_ptr<ClientPacket> p_Packet);
+        void HandleUserLogin(std::unique_ptr<ClientPacket> p_Packet);
         void HandleNULL(std::unique_ptr<ClientPacket> p_Packet);
         void HandleServerMessage(std::unique_ptr<ClientPacket> p_Packet) {}
 
     private:
-        /// ProcessIncomingData - Handle incoming data
+        /// ProcessIncomingData
+        /// Handle incoming data
         virtual bool ProcessIncomingData() override;
 
     private:

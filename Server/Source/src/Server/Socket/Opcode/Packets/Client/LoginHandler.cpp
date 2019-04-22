@@ -16,8 +16,22 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "ClientSocket.h"
+#include "Opcode/Packets/Server/LoginPackets.h"
 
 namespace SteerStone
 {
+    void ClientSocket::HandleHello(std::unique_ptr<ClientPacket> p_Packet)
+    {
+        Packet::Login::VersionCheck l_Packet;
+        SendPacket(l_Packet.Write());
+    }
+
+    void ClientSocket::HandleUserLogin(std::unique_ptr<ClientPacket> p_Packet)
+    {
+        std::string l_Username = p_Packet->ReadString();
+        std::string l_Password = p_Packet->ReadString();
+        int i = 0;
+    }
     
 } ///< NAMESPACE STEERSTONE

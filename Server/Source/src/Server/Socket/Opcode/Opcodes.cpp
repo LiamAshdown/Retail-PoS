@@ -37,6 +37,12 @@ namespace SteerStone
     /// Load our packets into storages to be accessed later
     void Opcodes::InitializePackets()
     {
+        StoreClientPacket(ClientPacketHeader::CMSG_USER_LOGIN,              "CMSG_USER_LOGIN",              &ClientSocket::HandleUserLogin              );
+        StoreClientPacket(ClientPacketHeader::CMSG_HELLO,                   "CMSG_HELLO",                   &ClientSocket::HandleHello                  );
+
+
+        StoreServerPacket(ServerPacketHeader::SMSG_VERSION_CHECK,           "SMSG_VERSION_CHECK",           &ClientSocket::HandleServerMessage          );
+
         LOG_INFO << "Loaded " << m_ClientOpcode.size() << " CMSG opcodes";
         LOG_INFO << "Loaded " << m_ServerOpcode.size() << " SMSG opcodes";
     }
